@@ -1,0 +1,189 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Easy Challege API",
+    "description": "The RestAPI provided by the Server of the Easy Challenge.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://auktionsplattform.com/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "GET",
+      "description": "All GET requests provided by the API."
+    }
+  ],
+  "paths": {
+    "/api/lessons": {
+      "get": {
+        "tags": [
+          "GET"
+        ],
+        "summary": "Get all lessons currently available.",
+        "responses": {
+          "200": {
+            "description": "Successful operation. All available lessons were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReducedLesson"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Could not find any lessons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error occured while getting the lessons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lessons/{id}": {
+      "get": {
+        "tags": [
+          "GET"
+        ],
+        "summary": "Get a single lesson.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the lesson to get.",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. The requested lesson will be returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleLesson"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Could not find any lessons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error occured while getting the lessons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReducedLesson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Example Title"
+          },
+          "image": {
+            "type": "string",
+            "example": "/api/images/example.jpg"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "subject1",
+              "subject2",
+              "subject3"
+            ]
+          }
+        }
+      },
+      "SingleLesson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Example Title"
+          },
+          "image": {
+            "type": "string",
+            "example": "/api/images/example.jpg"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "subject1",
+              "subject2",
+              "subject3"
+            ]
+          },
+          "contact": {
+            "type": "string",
+            "example": "fake@email.com"
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "Message": {
+            "type": "string",
+            "example": "Example error message."
+          }
+        }
+      }
+    }
+  }
+}
